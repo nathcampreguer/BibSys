@@ -6,6 +6,10 @@
 
 package br.unesp.rc.bibsys;
 
+import br.unesp.rc.bibsys.view.FileChooserDialog;
+import br.unesp.rc.bibsys.view.MainScreen;
+import javax.swing.JFrame;
+
 /**
  *
  * @author nathalia
@@ -16,7 +20,11 @@ public class BibSys {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        JFrame frame = new MainScreen();
+        frame.setVisible(true);
+        FileChooserDialog dialog = new FileChooserDialog(frame, true);
+        dialog.setFilter();
+        dialog.setVisible(true);
     }
     
 }
