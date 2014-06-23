@@ -6,7 +6,6 @@
 
 package br.unesp.rc.bibsys;
 
-import br.unesp.rc.bibsys.view.FileChooserDialog;
 import br.unesp.rc.bibsys.view.MainScreen;
 import javax.swing.JFrame;
 
@@ -22,9 +21,6 @@ public class BibSys {
     public static void main(String[] args) {
         JFrame frame = new MainScreen();
         frame.setVisible(true);
-        FileChooserDialog dialog = new FileChooserDialog(frame, true);
-        dialog.setFilter();
-        dialog.setVisible(true);
     }
     
 }
