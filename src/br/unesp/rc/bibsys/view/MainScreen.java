@@ -7,8 +7,7 @@
 package br.unesp.rc.bibsys.view;
 
 import br.unesp.rc.bibsys.utils.BibtexFilter;
-import java.io.File;
-import java.time.Clock;
+import br.unesp.rc.bibsys.utils.FileManager;
 import javax.swing.JFileChooser;
 
 /**
@@ -34,7 +33,7 @@ public class MainScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -49,9 +48,10 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        textArea.setEditable(false);
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane2.setViewportView(textArea);
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -113,10 +113,20 @@ public class MainScreen extends javax.swing.JFrame {
         fileChooser.setFileFilter(filter);
         //Open a File Chooser dialog
         int returnVal = fileChooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            System.out.println(file.getAbsolutePath());
-        }
+        switch(returnVal) {
+			case javax.swing.JFileChooser.CANCEL_OPTION: {
+				
+			}break;
+			case javax.swing.JFileChooser.APPROVE_OPTION: {
+				String path = fileChooser.getSelectedFile().getAbsolutePath();
+				if (!path.toLowerCase().endsWith(".bib"))
+					path += ".bib";
+				textArea.setText(FileManager.readFile(path).toString());
+			}break;
+			case javax.swing.JFileChooser.ERROR_OPTION: {
+				javax.swing.JOptionPane.showMessageDialog(this, "Error on loading.", "Load error", javax.swing.JOptionPane.ERROR_MESSAGE);
+			}break;
+		}
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
@@ -167,7 +177,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 String JtreePath;
 }

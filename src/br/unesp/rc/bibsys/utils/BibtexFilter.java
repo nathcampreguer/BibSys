@@ -21,9 +21,9 @@ public class BibtexFilter extends FileFilter{
             return true;
         }
 
-        String extension = Utils.getExtension(f);
+        String extension = FileManager.getExtension(f);
         if (extension != null) {
-            return extension.equals(Utils.bib);
+            return extension.equals(FileManager.bib);
         }
 
         return false;
