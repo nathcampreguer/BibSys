@@ -8,7 +8,12 @@ package br.unesp.rc.bibsys.view;
 
 import br.unesp.rc.bibsys.utils.BibtexFilter;
 import br.unesp.rc.bibsys.utils.FileManager;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import org.jbibtex.ParseException;
 
 /**
  *
@@ -121,7 +126,12 @@ public class MainScreen extends javax.swing.JFrame {
 				String path = fileChooser.getSelectedFile().getAbsolutePath();
 				if (!path.toLowerCase().endsWith(".bib"))
 					path += ".bib";
-				textArea.setText(FileManager.readFile(path).toString());
+                                File f = new File(path);
+                                try {
+                                    textArea.setText(FileManager.BibtoXML(f));
+                                } catch (    IOException | ParseException ex) {
+                                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                                }
 			}break;
 			case javax.swing.JFileChooser.ERROR_OPTION: {
 				javax.swing.JOptionPane.showMessageDialog(this, "Error on loading.", "Load error", javax.swing.JOptionPane.ERROR_MESSAGE);

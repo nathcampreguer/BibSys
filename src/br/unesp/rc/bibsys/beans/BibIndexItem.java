@@ -19,15 +19,15 @@ public class BibIndexItem {
      /**
      * Item's tag (@ARTICLE, @BOOK, etc)
      */
-    private final String tag;
+    private final String type;
     /**
      * Item's title
      */
     private final String title;
     
-    public BibIndexItem(String _key, String _tag, String _title) {
+    public BibIndexItem(String _key, String _type, String _title) {
         key = _key;
-        tag = _tag;
+        type = _type;
         title = _title;
     }
 
@@ -35,8 +35,8 @@ public class BibIndexItem {
         return key;
     }
 
-    public String getTag() {
-        return tag;
+    public String getType() {
+        return type;
     }
 
     public String getTitle() {
