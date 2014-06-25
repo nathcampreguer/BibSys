@@ -147,7 +147,7 @@ public class FileManager {
         return builder.parse(new InputSource(new StringReader(xmlSource)));
     }
     
-    public static File createXML(String path, String content) throws FileNotFoundException, IOException {
+    public static File createFile(String path, String content) throws FileNotFoundException, IOException {
         FileOutputStream fop;
         File file;
         file = new File(path);

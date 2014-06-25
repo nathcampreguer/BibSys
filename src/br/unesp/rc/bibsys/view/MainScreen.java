@@ -7,6 +7,7 @@
 package br.unesp.rc.bibsys.view;
 
 import br.unesp.rc.bibsys.utils.BibtexFilter;
+import br.unesp.rc.bibsys.utils.BibtexUtils;
 import br.unesp.rc.bibsys.utils.FileManager;
 import br.unesp.rc.bibsys.utils.VSX2;
 import java.io.File;
@@ -39,9 +40,11 @@ public class MainScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        textArea = new javax.swing.JTextArea();
+        xmlTextArea = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         bibTree = new javax.swing.JTree();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        bibtexTextArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -56,12 +59,16 @@ public class MainScreen extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        textArea.setEditable(false);
-        textArea.setColumns(20);
-        textArea.setRows(5);
-        jScrollPane2.setViewportView(textArea);
+        xmlTextArea.setEditable(false);
+        xmlTextArea.setColumns(20);
+        xmlTextArea.setRows(5);
+        jScrollPane2.setViewportView(xmlTextArea);
 
         jScrollPane1.setViewportView(bibTree);
+
+        bibtexTextArea.setColumns(20);
+        bibtexTextArea.setRows(5);
+        jScrollPane3.setViewportView(bibtexTextArea);
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -94,7 +101,12 @@ public class MainScreen extends javax.swing.JFrame {
         jMenu2.setText("Ferramentas");
         jMenu2.setActionCommand("");
 
-        jMenuItem4.setText("Gerar Bibkey");
+        jMenuItem4.setText("Formatar Bibkey");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -106,14 +118,17 @@ public class MainScreen extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
             .addComponent(jScrollPane1)
+            .addComponent(jScrollPane3)
         );
 
         pack();
@@ -132,15 +147,15 @@ public class MainScreen extends javax.swing.JFrame {
 				
 			}break;
 			case javax.swing.JFileChooser.APPROVE_OPTION: {
-				String path = fileChooser.getSelectedFile().getAbsolutePath();
-				if (!path.toLowerCase().endsWith(".bib"))
-					path += ".bib";
-                                File f = new File(path);
+				filePath = fileChooser.getSelectedFile().getAbsolutePath();
+				if (!filePath.toLowerCase().endsWith(".bib"))
+					filePath += ".bib";
+                                File f = new File(filePath);
                                 String xml;
                                 try {
                                     xml = FileManager.BibtoXML(f);
-                                    FileManager.createXML(xmlFilePath, xml);
-                                    textArea.setText(xml);
+                                    FileManager.createFile(xmlFilePath, xml);
+                                    xmlTextArea.setText(xml);
                                     VSX2 parser = new VSX2();
                                     bibTree.setModel(parser.parse(xmlFilePath));
                                     
@@ -155,6 +170,14 @@ public class MainScreen extends javax.swing.JFrame {
 			}break;
 		}
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            bibtexTextArea.setText(BibtexUtils.bibkeyFormat(filePath));
+        } catch (IOException | ParseException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,6 +216,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTree bibTree;
+    private javax.swing.JTextArea bibtexTextArea;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -204,10 +228,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JTextArea textArea;
+    private javax.swing.JTextArea xmlTextArea;
     // End of variables declaration//GEN-END:variables
 String JtreePath;
 String xmlFilePath = "xmlHelper.xml";
+String filePath;
 }
