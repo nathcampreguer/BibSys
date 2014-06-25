@@ -1,4 +1,4 @@
-<root>  <article id="Sh:1">
+<root>  <article id="Shelah:1969">
     <author>Shelah, Saharon</author>
     <journal>Israel Journal of Mathematics</journal>
     <pages>187--202</pages>
@@ -6,15 +6,7 @@
     <volume>7</volume>
     <year>1969</year>
   </article>
-  <article id="Sh:2">
-    <author>Shelah, Saharon</author>
-    <journal>Journal of Combinatorial Theory</journal>
-    <pages>298--300</pages>
-    <title>Note on a min-max problem of Leo Moser</title>
-    <volume>6</volume>
-    <year>1969</year>
-  </article>
-  <article id="Sh:3">
+  <article id="Shelah:1970">
     <author>Shelah, Saharon</author>
     <journal>Annals of Mathematical Logic</journal>
     <pages>69--118</pages>
@@ -22,88 +14,12 @@
     <volume>2</volume>
     <year>1970</year>
   </article>
-  <article id="Sh:4">
-    <author>Shelah, Saharon</author>
-    <journal>Journal of Symbolic Logic</journal>
-    <pages>73--82</pages>
-    <title>On theories $T$ categorical in $|T|$</title>
-    <volume>35</volume>
-    <year>1970</year>
-  </article>
-  <article id="Sh:5">
-    <author>Shelah, Saharon</author>
-    <journal>Israel Journal of Mathematics</journal>
-    <pages>75--79</pages>
-    <title>On languages with non-homogeneous strings of quantifiers</title>
-    <volume>8</volume>
-    <year>1970</year>
-  </article>
-  <article id="Sh:6">
-    <author>Shelah, Saharon</author>
-    <journal>Pacific Journal of Mathematics</journal>
-    <pages>541--545</pages>
-    <title>A note on Hanf numbers</title>
-    <volume>34</volume>
-    <year>1970</year>
-  </article>
-  <article id="Sh:7">
-    <author>Shelah, Saharon</author>
-    <journal>Journal of Symbolic Logic</journal>
-    <pages>83--84</pages>
-    <title>On the cardinality of ultraproduct of finite sets</title>
-    <volume>35</volume>
-    <year>1970</year>
-  </article>
-  <article id="Sh:8">
+  <article id="Shelah:1971">
     <author>Shelah, Saharon</author>
     <journal>Israel Journal of Mathematics</journal>
     <pages>193--198</pages>
     <title>Two cardinal compactness</title>
     <volume>9</volume>
-    <year>1971</year>
-  </article>
-  <article id="Sh:9">
-    <author>Shelah, Saharon</author>
-    <journal>Annals of Mathematical Logic</journal>
-    <pages>441--447</pages>
-    <title>Remark to ``local definability theory'' of Reyes</title>
-    <volume>2</volume>
-    <year>1970</year>
-  </article>
-  <article id="Sh:10">
-    <author>Shelah, Saharon</author>
-    <journal>Annals of Mathematical Logic</journal>
-    <pages>271--362</pages>
-    <title>Stability, the f.c.p., and superstability; model theoretic
-properties of formulas in first order theory</title>
-    <volume>3</volume>
-    <year>1971</year>
-  </article>
-  <article id="Sh:11">
-    <author>Shelah, Saharon</author>
-    <journal>Pacific Journal of Mathematics</journal>
-    <pages>811--818</pages>
-    <title>On the number of non-almost isomorphic models of $T$ in a
-power</title>
-    <volume>36</volume>
-    <year>1971</year>
-  </article>
-  <article id="Sh:12">
-    <author>Shelah, Saharon</author>
-    <journal>Israel Journal of Mathematics</journal>
-    <pages>473--487</pages>
-    <title>The number of non-isomorphic models of an unstable first-order
-theory</title>
-    <volume>9</volume>
-    <year>1971</year>
-  </article>
-  <article id="Sh:13">
-    <author>Shelah, Saharon</author>
-    <journal>Israel Journal of Mathematics</journal>
-    <pages>224--233</pages>
-    <title>Every two elementarily equivalent models have isomorphic
-ultrapowers</title>
-    <volume>10</volume>
     <year>1971</year>
   </article>
 </root>
