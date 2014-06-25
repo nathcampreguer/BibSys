@@ -8,6 +8,7 @@ package br.unesp.rc.bibsys.view;
 
 import br.unesp.rc.bibsys.utils.BibtexFilter;
 import br.unesp.rc.bibsys.utils.FileManager;
+import br.unesp.rc.bibsys.utils.VSX2;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -39,6 +40,8 @@ public class MainScreen extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        bibTree = new javax.swing.JTree();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -57,6 +60,8 @@ public class MainScreen extends javax.swing.JFrame {
         textArea.setColumns(20);
         textArea.setRows(5);
         jScrollPane2.setViewportView(textArea);
+
+        jScrollPane1.setViewportView(bibTree);
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -100,11 +105,15 @@ public class MainScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         pack();
@@ -127,11 +136,19 @@ public class MainScreen extends javax.swing.JFrame {
 				if (!path.toLowerCase().endsWith(".bib"))
 					path += ".bib";
                                 File f = new File(path);
+                                String xml;
                                 try {
-                                    textArea.setText(FileManager.BibtoXML(f));
+                                    xml = FileManager.BibtoXML(f);
+                                    FileManager.createXML(xmlFilePath, xml);
+                                    textArea.setText(xml);
+                                    VSX2 parser = new VSX2();
+                                    bibTree.setModel(parser.parse(xmlFilePath));
+                                    
                                 } catch (    IOException | ParseException ex) {
                                     Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
-                                }
+                                } catch (Exception ex) {     
+                                    Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                                }     
 			}break;
 			case javax.swing.JFileChooser.ERROR_OPTION: {
 				javax.swing.JOptionPane.showMessageDialog(this, "Error on loading.", "Load error", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -175,6 +192,7 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTree bibTree;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -184,10 +202,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea textArea;
     // End of variables declaration//GEN-END:variables
 String JtreePath;
+String xmlFilePath = "xmlHelper.xml";
 }

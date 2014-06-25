@@ -8,18 +8,24 @@ package br.unesp.rc.bibsys.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.jbibtex.BibTeXDatabase;
 import org.jbibtex.BibTeXEntry;
-import org.jbibtex.BibTeXParser;
-import org.jbibtex.BibTeXString;
 import org.jbibtex.Key;
 import org.jbibtex.ParseException;
 import org.jbibtex.Value;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -110,6 +116,7 @@ public class FileManager {
         keys.add(new Key("volume"));
         keys.add(new Key("year"));
         
+        xml = "<root>";
         for(BibTeXEntry entry : entries){
             String type = entry.getType().toString();
             String bibkey = entry.getKey().toString();
@@ -128,11 +135,36 @@ public class FileManager {
             }
             xml += "  </"+type+">\n";
         }
-        
+        xml += "</root>";
         
         return xml;
     }
     
+    public static Document stringToDom(String xmlSource) 
+            throws SAXException, ParserConfigurationException, IOException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        return builder.parse(new InputSource(new StringReader(xmlSource)));
+    }
     
+    public static File createXML(String path, String content) throws FileNotFoundException, IOException {
+        FileOutputStream fop;
+        File file;
+        file = new File(path);
+        fop = new FileOutputStream(file);
+
+        // if file doesnt exists, then create it
+        if (!file.exists()) {
+                file.createNewFile();
+        }
+
+        // get the content in bytes
+        byte[] contentInBytes = content.getBytes();
+
+        fop.write(contentInBytes);
+        fop.flush();
+        fop.close();
+        return file;
+    }
     
 }
