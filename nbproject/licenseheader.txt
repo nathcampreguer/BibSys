@@ -1,0 +1,9 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Trabalho de conclusão da disciplina Sistemas Orientados a Objetos
+${licensePrefix}Bacharelado em Ciências da Computação - UNESP - Campus Rio Claro
+${licensePrefix}Autor: Nathalia Campreguer França
+<#if licenseLast??>
+${licenseLast}
+</#if>

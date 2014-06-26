@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author nathalia
+ * @author Nathalia
  */
 public class BibSys {
 

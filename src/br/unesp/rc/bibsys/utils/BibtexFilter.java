@@ -10,11 +10,17 @@ import java.io.File;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
- * @author nathalia
+ * Filter model for a JFileChooser that will accept only .bib files
+ * @author Nathalia
  */
 public class BibtexFilter extends FileFilter{
     //Accept all directories and .bib files.
+    
+    /**
+    * Sets the rules for this model.
+    * Accepts only .bib files and allows folders.
+    * @param f 
+    */
     @Override
     public boolean accept(File f) {
         if (f.isDirectory()) {
@@ -29,7 +35,11 @@ public class BibtexFilter extends FileFilter{
         return false;
     }
 
-    //The description of this filter
+    /**
+    * returns this filter description
+    * to be displayed on the JFileChooser
+    * @return String
+    */
     @Override
     public String getDescription() {
         return ".bib files only";

@@ -10,10 +10,14 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author nathalia
+ * @author Nathalia
  */
 public class MainScreenUtils {
     
+    /**
+    * Creates a JFileChooser that accepts only .bib files
+     * @return 
+    */
     public static JFileChooser createFileChooser() {
         final JFileChooser fileChooser = new JFileChooser();
         

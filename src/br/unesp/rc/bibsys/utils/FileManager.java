@@ -29,8 +29,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- *
- * @author nathalia
+ * Helper methods for a general File
+ * @author Nathalia
  */
 public class FileManager {
     
@@ -55,6 +55,13 @@ public class FileManager {
         return ext;
     }
     
+    /**
+    * Parses a .bib file to XML
+    * @param file
+    * @return 
+    * @throws java.io.IOException
+    * @throws org.jbibtex.ParseException
+    */
     public static String BibtoXML(File file) throws IOException, ParseException {
         String xml = "";
         
@@ -86,6 +93,13 @@ public class FileManager {
         return xml;
     }
     
+    /**
+    * Parses a .bib file into a reference key
+    * @param file
+    * @return 
+    * @throws java.io.IOException
+    * @throws org.jbibtex.ParseException
+    */
     public static String BibtoTree(File file) throws IOException, ParseException {
         String xml = "";
         
@@ -113,6 +127,11 @@ public class FileManager {
         return xml;
     }
     
+    /**
+    * Writes a XML string into a new Document
+    * @param xmlSource
+    * @return 
+    */
     public static Document stringToDom(String xmlSource) 
             throws SAXException, ParserConfigurationException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -120,6 +139,10 @@ public class FileManager {
         return builder.parse(new InputSource(new StringReader(xmlSource)));
     }
     
+    /**
+    * returns this filter description
+    * to be displayed on the JFileChooser
+    */
     public static File createFile(String path, String content) throws FileNotFoundException, IOException {
         FileOutputStream fop;
         File file;
@@ -140,6 +163,15 @@ public class FileManager {
         return file;
     }
     
+    /**
+    * Compares two .bib files and output the difference in a 
+    * .bib formatted string
+    * @param path1
+    * @param path2
+    * @return 
+    * @throws java.io.IOException
+    * @throws org.jbibtex.ParseException
+    */
     public static String fileDiff(String path1, String path2) throws IOException, ParseException {
         File file1 = new File(path1);
         File file2 = new File(path2);
@@ -166,20 +198,12 @@ public class FileManager {
         
             File file = new File("bibtexHelper.bib");
             BibtexUtils.formatBibtex(databaseDiff, file);
-            StringBuilder fileContents = new StringBuilder((int)file.length());
-            Scanner scanner = new Scanner(file);
-            String lineSeparator = System.getProperty("line.separator");
-
-            try {
-                while(scanner.hasNextLine()) {        
-                    fileContents.append(scanner.nextLine() + lineSeparator);
-                }
-                return fileContents.toString();
-            } finally {
-                scanner.close();
-            }
+            return readFile(file);
     }
     
+    /**
+    * returns all the possible keys a Bibtex item may have
+    */
     private static Collection<Key> createKeyList() {
         Collection<Key> keys = new ArrayList<>();
         keys.add(new Key("address"));
@@ -209,6 +233,27 @@ public class FileManager {
         keys.add(new Key("volume"));
         keys.add(new Key("year"));
         return keys;
+    }
+    
+    /**
+    * Writes the content of a file to a string
+    * @param file
+    * @return 
+    * @throws java.io.FileNotFoundException
+    */
+    public static String readFile(File file) throws FileNotFoundException {
+        StringBuilder fileContents = new StringBuilder((int)file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {        
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
     }
     
 }

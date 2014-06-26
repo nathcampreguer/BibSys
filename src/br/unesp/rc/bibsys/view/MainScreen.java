@@ -19,7 +19,7 @@ import org.jbibtex.ParseException;
 
 /**
  *
- * @author nathalia
+ * @author Nathalia
  */
 public class MainScreen extends javax.swing.JFrame {
 
@@ -54,7 +54,6 @@ public class MainScreen extends javax.swing.JFrame {
         fileDiffButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -147,12 +146,14 @@ public class MainScreen extends javax.swing.JFrame {
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-
-        jMenuItem1.setText("Sobre BibSys");
-        jMenu3.add(jMenuItem1);
         jMenu3.add(jSeparator1);
 
         jMenuItem2.setText("Sair");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem2);
 
         jMenuBar1.add(jMenu3);
@@ -293,6 +294,10 @@ public class MainScreen extends javax.swing.JFrame {
         
     }//GEN-LAST:event_fileDiffButtonActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -363,7 +368,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

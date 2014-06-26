@@ -6,10 +6,6 @@
 
 package br.unesp.rc.bibsys.utils;
 
-/* 
- * Code from:
- * http://www.java2s.com/Code/Java/XML/XMLTreeSimpleXMLutilityclass.htm
-*/
 
 import java.awt.Color;
 import java.awt.Component;
@@ -30,6 +26,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+    /**
+    * This is class was developed by a third part.
+    * It parses a XML document to a TreeModel for a JTree
+    * Code from:
+    * http://www.java2s.com/Code/Java/XML/XMLTreeSimpleXMLutilityclass.htm
+    */
 public class VSX2 {
 
   public TreeModel parse(String filename) throws Exception {

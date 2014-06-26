@@ -23,11 +23,19 @@ import org.jbibtex.Key;
 import org.jbibtex.ParseException;
 
 /**
- *
- * @author nathalia
+ * Helper methods for Bibtex type files
+ * @author Nathalia
  */
 public class BibtexUtils {
     
+    /**
+    * Accepts a .bib file and returns a Bibtex database 
+    * populated with the file's content
+    * @param file
+    * @return BibTeXDatabase
+    * @throws java.io.IOException
+    * @throws org.jbibtex.ParseException
+    */
     public static BibTeXDatabase parseBibTeX(File file) throws IOException, ParseException {
         Reader reader = new FileReader(file);
 
@@ -56,7 +64,14 @@ public class BibtexUtils {
             reader.close();
         }
     }
-    //Correct bibkey formatting and change output to BibTex format
+    
+    /**
+    * Open a .bib file, read and format each bibkey.
+    * Important: It modifies the original final.
+    * @param path
+    * @throws java.io.IOException
+    * @throws org.jbibtex.ParseException
+    */
     public static void bibkeyFormat(String path) throws IOException, ParseException {
         File file = new File(path);
         BibTeXDatabase database = BibtexUtils.parseBibTeX(file);
@@ -70,15 +85,15 @@ public class BibtexUtils {
             //separate string with all authors into an array
             if (author.contains("and")) {
                 String[] authors = author.split("and");
-                authors[0] = removeComma(authors[0]);
-                authors[1] = removeComma(authors[1]);
+                authors[0] = getLastName(authors[0]);
+                authors[1] = getLastName(authors[1]);
                 if (authors.length == 2) {
                     bibkey = authors[0]+"."+authors[1]+":"+year;
                 } else {
                      bibkey = authors[0]+".et.al:"+year;
                 }
             } else {
-                bibkey = removeComma(author)+":"+year;
+                bibkey = getLastName(author)+":"+year;
             }
            
             bibkey = bibkey.replaceAll(" ", "");
@@ -88,6 +103,12 @@ public class BibtexUtils {
         }
     }
     
+    /**
+    * Reads a BibTeX database and writes its contents to a .bib file
+     * @param database
+     * @param file
+     * @throws java.io.IOException
+    */
     public static void formatBibtex(BibTeXDatabase database, File file) throws IOException {
         Writer writer = (file != null ? new FileWriter(file) : new OutputStreamWriter(System.out));
 
@@ -100,7 +121,10 @@ public class BibtexUtils {
         }
     }
        
-    private static String removeComma(String author) {
+    /**
+    * Returns the author's last name
+    */
+    private static String getLastName(String author) {
         if (author.contains(","))
             return author.substring(0,author.indexOf(","));
         return author;
