@@ -6,9 +6,9 @@
 
 package br.unesp.rc.bibsys.view;
 
-import br.unesp.rc.bibsys.utils.BibtexFilter;
 import br.unesp.rc.bibsys.utils.BibtexUtils;
 import br.unesp.rc.bibsys.utils.FileManager;
+import br.unesp.rc.bibsys.utils.MainScreenUtils;
 import br.unesp.rc.bibsys.utils.VSX2;
 import java.io.File;
 import java.io.IOException;
@@ -39,12 +39,19 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        xmlTextArea = new javax.swing.JTextArea();
+        MainTabs = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         bibTree = new javax.swing.JTree();
         jScrollPane3 = new javax.swing.JScrollPane();
         treeTextArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        xmlTextArea = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        fileDiffTextArea = new javax.swing.JTextArea();
+        file1TextField = new javax.swing.JTextField();
+        file2TextField = new javax.swing.JTextField();
+        fileDiffButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -58,17 +65,85 @@ public class MainScreen extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(bibTree);
+
+        MainTabs.addTab("Jtree", jScrollPane1);
+
+        treeTextArea.setEditable(false);
+        treeTextArea.setColumns(20);
+        treeTextArea.setRows(5);
+        jScrollPane3.setViewportView(treeTextArea);
+
+        MainTabs.addTab("Simple Tree", jScrollPane3);
 
         xmlTextArea.setEditable(false);
         xmlTextArea.setColumns(20);
         xmlTextArea.setRows(5);
         jScrollPane2.setViewportView(xmlTextArea);
 
-        jScrollPane1.setViewportView(bibTree);
+        MainTabs.addTab("XML", jScrollPane2);
 
-        treeTextArea.setColumns(20);
-        treeTextArea.setRows(5);
-        jScrollPane3.setViewportView(treeTextArea);
+        fileDiffTextArea.setColumns(20);
+        fileDiffTextArea.setRows(5);
+        jScrollPane4.setViewportView(fileDiffTextArea);
+
+        file1TextField.setEditable(false);
+        file1TextField.setText("Arquivo 1");
+        file1TextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                file1TextFieldMouseClicked(evt);
+            }
+        });
+
+        file2TextField.setEditable(false);
+        file2TextField.setText("Arquivo 2");
+        file2TextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                file2TextFieldMouseClicked(evt);
+            }
+        });
+
+        fileDiffButton.setText("Ok");
+        fileDiffButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileDiffButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(file2TextField)
+                    .addComponent(file1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fileDiffButton)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(file1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(file2TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileDiffButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE))
+        );
+
+        MainTabs.addTab("Dif. entre arquivos", jPanel1);
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -94,6 +169,11 @@ public class MainScreen extends javax.swing.JFrame {
         jMenu1.add(jSeparator2);
 
         jMenuItem5.setText("Comparar arquivos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
@@ -117,32 +197,19 @@ public class MainScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 676, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(MainTabs)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addComponent(jScrollPane3)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(MainTabs, javax.swing.GroupLayout.Alignment.LEADING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        final JFileChooser fileChooser = new JFileChooser();
-        
-        //Create and set a BibtexFilter to the File Chooser
-        BibtexFilter filter = new BibtexFilter();
-        fileChooser.removeChoosableFileFilter(fileChooser.getAcceptAllFileFilter());
-        fileChooser.setFileFilter(filter);
-        //Open a File Chooser dialog
+
+        JFileChooser fileChooser = MainScreenUtils.createFileChooser();
         int returnVal = fileChooser.showOpenDialog(this);
         switch(returnVal) {
 			case javax.swing.JFileChooser.CANCEL_OPTION: {
@@ -166,6 +233,60 @@ public class MainScreen extends javax.swing.JFrame {
             Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        MainTabs.setSelectedIndex(3);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void file1TextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_file1TextFieldMouseClicked
+        JFileChooser fileChooser = MainScreenUtils.createFileChooser();
+        int returnVal = fileChooser.showOpenDialog(this);
+        switch(returnVal) {
+			case javax.swing.JFileChooser.CANCEL_OPTION: {
+				
+			}break;
+			case javax.swing.JFileChooser.APPROVE_OPTION: {
+                                fileDiffTextArea.setText("");
+				String path = fileChooser.getSelectedFile().getAbsolutePath();
+                                file1TextField.setText(path);
+			}break;
+			case javax.swing.JFileChooser.ERROR_OPTION: {
+				javax.swing.JOptionPane.showMessageDialog(this, "Error on loading.", "Load error", javax.swing.JOptionPane.ERROR_MESSAGE);
+			}break;
+		}
+    }//GEN-LAST:event_file1TextFieldMouseClicked
+
+    private void file2TextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_file2TextFieldMouseClicked
+                JFileChooser fileChooser = MainScreenUtils.createFileChooser();
+        int returnVal = fileChooser.showOpenDialog(this);
+        switch(returnVal) {
+			case javax.swing.JFileChooser.CANCEL_OPTION: {
+				
+			}break;
+			case javax.swing.JFileChooser.APPROVE_OPTION: {
+                                fileDiffTextArea.setText("");
+				String path = fileChooser.getSelectedFile().getAbsolutePath();
+                                file2TextField.setText(path);
+			}break;
+			case javax.swing.JFileChooser.ERROR_OPTION: {
+				javax.swing.JOptionPane.showMessageDialog(this, "Error on loading.", "Load error", javax.swing.JOptionPane.ERROR_MESSAGE);
+			}break;
+		}
+    }//GEN-LAST:event_file2TextFieldMouseClicked
+
+    private void fileDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileDiffButtonActionPerformed
+        String diffText = "";
+        try {
+            diffText = FileManager.fileDiff(file1TextField.getText(), file2TextField.getText());
+        } catch (IOException | ParseException ex) {
+            Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+        fileDiffTextArea.setText(diffText);
+    }//GEN-LAST:event_fileDiffButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,6 +333,7 @@ public class MainScreen extends javax.swing.JFrame {
                 xml = FileManager.BibtoXML(f);
                 basicTree = FileManager.BibtoTree(f);
                 FileManager.createFile(xmlFilePath, xml);
+               
                 xmlTextArea.setText(xml);
                 treeTextArea.setText(basicTree);
                 VSX2 parser = new VSX2();
@@ -226,7 +348,12 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTabbedPane MainTabs;
     private javax.swing.JTree bibTree;
+    private javax.swing.JTextField file1TextField;
+    private javax.swing.JTextField file2TextField;
+    private javax.swing.JButton fileDiffButton;
+    private javax.swing.JTextArea fileDiffTextArea;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -236,9 +363,11 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea treeTextArea;

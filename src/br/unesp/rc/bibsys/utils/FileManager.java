@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,35 +54,6 @@ public class FileManager {
         }
         return ext;
     }
-    
-    /**
-     * Read the full text of a file.
-     * @param path The full path for the file location 
-     * @return The full text from f converted into String
-     */
-    public static StringBuffer readFile(String path) {
-        StringBuffer text = new StringBuffer();
-        BufferedReader br = null;
-        try {
-                String sCurrentLine;
-                br = new BufferedReader(new FileReader(path));
-                while ((sCurrentLine = br.readLine()) != null) {
-                        text.append(sCurrentLine);
-                        text.append("\n");
-                }
-        } catch (IOException ex) {
-                System.out.println("Mensagem: \n" + ex.getMessage());
-        } finally {
-                try {
-                        if (br != null) {
-                                br.close();
-                        }
-                } catch (IOException ex) {
-                        System.out.println("Mensagem: \n" + ex.getMessage());
-                }
-        }
-        return text;
-	}
     
     public static String BibtoXML(File file) throws IOException, ParseException {
         String xml = "";
@@ -166,6 +138,41 @@ public class FileManager {
         fop.flush();
         fop.close();
         return file;
+    }
+    
+    public static String fileDiff(String path1, String path2) throws IOException, ParseException {
+        File file1 = new File(path1);
+        File file2 = new File(path2);
+        
+        BibTeXDatabase database1 = BibtexUtils.parseBibTeX(file1);
+        BibTeXDatabase database2 = BibtexUtils.parseBibTeX(file2);
+
+        Collection<BibTeXEntry> entries1 = (database1.getEntries()).values();
+        Collection<BibTeXEntry> entries2 = (database2.getEntries()).values();
+        Collection<BibTeXEntry> diff = new ArrayList();
+        
+        entries1.removeAll(entries2);
+        entries2.removeAll(entries1);
+        diff.addAll(entries2);
+        diff.addAll(entries2);
+        BibTeXDatabase databaseDiff = new BibTeXDatabase();
+        for(BibTeXEntry entry : diff){
+            databaseDiff.addObject(entry);
+        }
+        File file = new File("bibtexHelper.bib");
+        BibtexUtils.formatBibtex(databaseDiff, file);
+        StringBuilder fileContents = new StringBuilder((int)file.length());
+        Scanner scanner = new Scanner(file);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {        
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
     }
     
     private static Collection<Key> createKeyList() {

@@ -88,7 +88,7 @@ public class BibtexUtils {
         }
     }
     
-    private static void formatBibtex(BibTeXDatabase database, File file) throws IOException {
+    public static void formatBibtex(BibTeXDatabase database, File file) throws IOException {
         Writer writer = (file != null ? new FileWriter(file) : new OutputStreamWriter(System.out));
 
         try {
