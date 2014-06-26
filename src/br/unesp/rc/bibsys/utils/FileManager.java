@@ -69,7 +69,7 @@ public class FileManager {
         Collection<BibTeXEntry> entries = (database.getEntries()).values();
         Collection<Key> keys = createKeyList();
         
-        xml = "<root>";
+        xml = "<root>\n";
         for(BibTeXEntry entry : entries){
             String type = entry.getType().toString();
             String bibkey = entry.getKey().toString();

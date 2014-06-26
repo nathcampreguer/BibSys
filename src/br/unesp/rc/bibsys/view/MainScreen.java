@@ -52,6 +52,8 @@ public class MainScreen extends javax.swing.JFrame {
         file1TextField = new javax.swing.JTextField();
         file2TextField = new javax.swing.JTextField();
         fileDiffButton = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        bibTextArea = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -127,7 +129,7 @@ public class MainScreen extends javax.swing.JFrame {
                     .addComponent(file1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fileDiffButton)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +145,12 @@ public class MainScreen extends javax.swing.JFrame {
         );
 
         MainTabs.addTab("Dif. entre arquivos", jPanel1);
+
+        bibTextArea.setColumns(20);
+        bibTextArea.setRows(5);
+        jScrollPane5.setViewportView(bibTextArea);
+
+        MainTabs.addTab("BibTeX", jScrollPane5);
 
         jMenu3.setText("BibSys");
         jMenu3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -198,7 +206,10 @@ public class MainScreen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainTabs)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MainTabs, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -339,11 +350,13 @@ public class MainScreen extends javax.swing.JFrame {
             File f = new File(filePath);
             String xml;
             String basicTree;
+            String bibtex;
             try {
                 xml = FileManager.BibtoXML(f);
                 basicTree = FileManager.BibtoTree(f);
                 FileManager.createFile(xmlFilePath, xml);
-               
+                bibtex = FileManager.readFile(f);
+                bibTextArea.setText(bibtex);
                 xmlTextArea.setText(xml);
                 treeTextArea.setText(basicTree);
                 VSX2 parser = new VSX2();
@@ -359,6 +372,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane MainTabs;
+    private javax.swing.JTextArea bibTextArea;
     private javax.swing.JTree bibTree;
     private javax.swing.JTextField file1TextField;
     private javax.swing.JTextField file2TextField;
@@ -377,6 +391,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextArea treeTextArea;
