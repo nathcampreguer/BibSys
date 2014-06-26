@@ -279,13 +279,18 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_file2TextFieldMouseClicked
 
     private void fileDiffButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileDiffButtonActionPerformed
-        String diffText = "";
         try {
-            diffText = FileManager.fileDiff(file1TextField.getText(), file2TextField.getText());
+            String diffText = "";
+            String file1 = file1TextField.getText();
+            String file2 = file2TextField.getText();
+            if (!(file1.equals("Arquivo 1") && file2.equals("Arquivo 2"))) {
+                diffText = FileManager.fileDiff(file1, file2);
+                fileDiffTextArea.setText(diffText);
+            }
         } catch (IOException | ParseException ex) {
             Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
         }       
-        fileDiffTextArea.setText(diffText);
+        
     }//GEN-LAST:event_fileDiffButtonActionPerformed
 
     /**

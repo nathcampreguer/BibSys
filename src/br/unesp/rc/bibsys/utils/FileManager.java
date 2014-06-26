@@ -6,15 +6,15 @@
 
 package br.unesp.rc.bibsys.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -146,33 +146,38 @@ public class FileManager {
         
         BibTeXDatabase database1 = BibtexUtils.parseBibTeX(file1);
         BibTeXDatabase database2 = BibtexUtils.parseBibTeX(file2);
+        BibTeXDatabase databaseDiff = new BibTeXDatabase();
 
-        Collection<BibTeXEntry> entries1 = (database1.getEntries()).values();
-        Collection<BibTeXEntry> entries2 = (database2.getEntries()).values();
+        Map<Key, BibTeXEntry> entries1 = database1.getEntries();
+        Map<Key, BibTeXEntry> entries2 = database2.getEntries();
         Collection<BibTeXEntry> diff = new ArrayList();
         
-        entries1.removeAll(entries2);
-        entries2.removeAll(entries1);
-        diff.addAll(entries2);
-        diff.addAll(entries2);
-        BibTeXDatabase databaseDiff = new BibTeXDatabase();
-        for(BibTeXEntry entry : diff){
-            databaseDiff.addObject(entry);
-        }
-        File file = new File("bibtexHelper.bib");
-        BibtexUtils.formatBibtex(databaseDiff, file);
-        StringBuilder fileContents = new StringBuilder((int)file.length());
-        Scanner scanner = new Scanner(file);
-        String lineSeparator = System.getProperty("line.separator");
-
-        try {
-            while(scanner.hasNextLine()) {        
-                fileContents.append(scanner.nextLine() + lineSeparator);
+        for (Entry<Key, BibTeXEntry> entry : entries1.entrySet())
+            {
+                if(!entries2.containsKey(entry.getKey()))
+                databaseDiff.addObject(entry.getValue());
+                System.out.println(entry.getKey().toString());
             }
-            return fileContents.toString();
-        } finally {
-            scanner.close();
-        }
+        for (Entry<Key, BibTeXEntry> entry : entries2.entrySet())
+            {
+                if(!entries1.containsKey(entry.getKey()))
+                databaseDiff.addObject(entry.getValue());
+            }
+        
+            File file = new File("bibtexHelper.bib");
+            BibtexUtils.formatBibtex(databaseDiff, file);
+            StringBuilder fileContents = new StringBuilder((int)file.length());
+            Scanner scanner = new Scanner(file);
+            String lineSeparator = System.getProperty("line.separator");
+
+            try {
+                while(scanner.hasNextLine()) {        
+                    fileContents.append(scanner.nextLine() + lineSeparator);
+                }
+                return fileContents.toString();
+            } finally {
+                scanner.close();
+            }
     }
     
     private static Collection<Key> createKeyList() {
