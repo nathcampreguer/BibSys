@@ -25,7 +25,9 @@ Observações:
    documento não contenha caracteres ilegais. Para suprir esta
    limitação, também é gerada uma árvore em formato de texto;
  - Para evitar problemas com o Jar da biblioteca utilizada,
-   optei por inserir o seu código fonte em um pacote do projeto.
+   optei por inserir o seu código fonte em um pacote do projeto;
+ - A documentação do projeto (Javadoc) está dentro da pasta chamada
+   Javadoc_BibSys, na raiz do projeto.
 
 Bibliotecas utilizadas:
- Jbibtex : https://github.com/jbibtex/jbibtex
+ Jbibtex - https://github.com/jbibtex/jbibtex
